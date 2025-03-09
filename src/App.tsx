@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button'
+import HomePage from './pages/Home'
 
 function App() {
 	return (
 		<div>
-			<Button variant={'default'}>Click me</Button>
+			<HomePage />
 		</div>
 	)
 }
