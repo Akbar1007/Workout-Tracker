@@ -32,3 +32,8 @@ export const programs = [
 		description: 'Plans built with registered dietitians and nutritionists.',
 	},
 ]
+
+export const navLinks = [
+	{ label: 'Home', path: '#home' },
+	{ label: 'Programs', path: 'programs' },
+]
