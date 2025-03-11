@@ -1,10 +1,31 @@
+import { registerSchema } from '@/lib/validation'
 import { useAuthState } from '@/stores/auth.store'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import { Button } from '../ui/button'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '../ui/form'
 import { Input } from '../ui/input'
 import { Separator } from '../ui/separator'
 
 const Register = () => {
 	const { setAuth } = useAuthState()
+
+	const form = useForm<z.infer<typeof registerSchema>>({
+		resolver: zodResolver(registerSchema),
+		defaultValues: { email: '', password: '' },
+	})
+
+	const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+		const { email, password } = values
+	}
 
 	return (
 		<div className='flex flex-col'>
@@ -21,24 +42,59 @@ const Register = () => {
 
 			<Separator className='my-3' />
 
-			<div>
-				<span>Email</span>
-				<Input placeholder='YourName@gmail.com' />
-			</div>
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2'>
+					<FormField
+						control={form.control}
+						name='email'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email address</FormLabel>
+								<FormControl>
+									<Input placeholder='example@gmail.com' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-			<div className='grid grid-cols-2 gap-4 mt-2'>
-				<div className='mt-2'>
-					<span>Password</span>
-					<Input placeholder='********' type='password' />
-				</div>
+					<div className='grid grid-cols-2 gap-2'>
+						<FormField
+							control={form.control}
+							name='password'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Password</FormLabel>
+									<FormControl>
+										<Input placeholder='********' type='password' {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 
-				<div className='mt-2'>
-					<span>Confirm Password</span>
-					<Input placeholder='********' type='password' />
-				</div>
-			</div>
+						<FormField
+							control={form.control}
+							name='confirmPassword'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Confirm Password</FormLabel>
+									<FormControl>
+										<Input placeholder='********' type='password' {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
 
-			<Button className='w-full h-12 mt-2'>Register</Button>
+					<div>
+						<Button type='submit' className='h-12 w-full mt-2'>
+							Submit
+						</Button>
+					</div>
+				</form>
+			</Form>
 		</div>
 	)
 }
