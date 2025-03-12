@@ -5,8 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { FiAlertCircle } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { Button } from '../ui/button'
 import {
 	Form,
@@ -36,7 +38,7 @@ const Register = () => {
 		const { email, password } = values
 		setIsLoading(true)
 		try {
-			const res = createUserWithEmailAndPassword(auth, email, password)
+			const res = await createUserWithEmailAndPassword(auth, email, password)
 			navigate('/')
 		} catch (error) {
 			const result = error as Error
@@ -60,6 +62,14 @@ const Register = () => {
 			</p>
 
 			<Separator className='my-3' />
+
+			{error && (
+				<Alert variant='destructive'>
+					<FiAlertCircle className='h-4 w-4' />
+					<AlertTitle>Error</AlertTitle>
+					<AlertDescription>{error}</AlertDescription>
+				</Alert>
+			)}
 
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2'>
