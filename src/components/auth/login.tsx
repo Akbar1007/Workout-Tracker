@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import { FiAlertCircle } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
+import FillLoading from '../shared/fill-loading'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { Button } from '../ui/button'
 import {
@@ -49,6 +50,7 @@ const Login = () => {
 
 	return (
 		<div className='flex flex-col'>
+			{isLoading && <FillLoading />}
 			<h1 className='font-bold text-xl'>Login</h1>
 			<p className='text-muted-foreground'>
 				Do not have an account?{' '}
