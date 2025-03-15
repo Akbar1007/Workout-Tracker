@@ -27,6 +27,10 @@ const UserBox = () => {
 		})
 	}
 
+	const onDashboard = () => {
+		navigate('/dashboard')
+	}
+
 	return (
 		// TODO: add error boundary to img
 
@@ -71,7 +75,7 @@ const UserBox = () => {
 				<DropdownMenuSeparator />
 
 				<DropdownMenuGroup>
-					<DropdownMenuItem className='cursor-pointer'>
+					<DropdownMenuItem className='cursor-pointer' onClick={onDashboard}>
 						<CgGym className='w-4 h-4 mr-2' />
 						<span>Training</span>
 					</DropdownMenuItem>
