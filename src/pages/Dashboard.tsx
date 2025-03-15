@@ -1,5 +1,13 @@
+import TaskForm from '@/components/forms/task'
 import TaskItem from '@/components/shared/task-item'
 import { Button } from '@/components/ui/button'
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { BadgePlus } from 'lucide-react'
 
@@ -10,9 +18,20 @@ const Dashboard = () => {
 				<div className='flex flex-col space-y-3'>
 					<div className='w-full p-4 rounded-md flex justify-between bg-gradient-to-t from-background to-secondary'>
 						<div className='text-2xl font-bold'>Trainings</div>
-						<Button size={'icon'}>
-							<BadgePlus />
-						</Button>
+						<Dialog>
+							<DialogTrigger>
+								<Button size={'icon'}>
+									<BadgePlus />
+								</Button>
+							</DialogTrigger>
+							<DialogContent>
+								<DialogHeader>
+									<DialogTitle>Create a new task</DialogTitle>
+								</DialogHeader>
+								<Separator />
+								<TaskForm />
+							</DialogContent>
+						</Dialog>
 					</div>
 					<Separator />
 					<div className='w-full p-4 rounded-md flex justify-between bg-gradient-to-b from-background to-secondary relative min-h-60'>
