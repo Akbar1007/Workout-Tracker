@@ -7,6 +7,7 @@ import UserBox from './user-box'
 
 const Navbar = () => {
 	const { user } = useUserState()
+	// do not forget to remove:
 	console.log(user)
 
 	return (

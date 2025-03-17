@@ -74,3 +74,9 @@ const TaskForm = ({ title = '', handler }: Props) => {
 }
 
 export default TaskForm
+
+const QUery = () => {
+	const [quaery, setQuaery] = useState('query')
+
+	return <div>query</div>
+}

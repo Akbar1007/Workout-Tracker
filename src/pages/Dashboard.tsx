@@ -1,5 +1,7 @@
 import TaskForm from '@/components/forms/task'
+import FillLoading from '@/components/shared/fill-loading'
 import TaskItem from '@/components/shared/task-item'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
@@ -11,15 +13,25 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { db } from '@/firebase'
 import { taskSchema } from '@/lib/validation'
+import { TaskService } from '@/services/task.service'
 import { useUserState } from '@/stores/user.store'
+import { useQuery } from '@tanstack/react-query'
 import { addDoc, collection } from 'firebase/firestore'
 import { BadgePlus } from 'lucide-react'
 import { useState } from 'react'
+import { FiAlertCircle } from 'react-icons/fi'
 import { z } from 'zod'
 
 const Dashboard = () => {
 	const [open, setOpen] = useState(false)
 	const { user } = useUserState()
+
+	const { isPending, error, data, refetch } = useQuery({
+		queryKey: ['tasks-data'],
+		queryFn: TaskService.getTasks,
+	})
+	// do not forget to remove
+	console.log(data)
 
 	const onAdd = async ({ title }: z.infer<typeof taskSchema>) => {
 		if (!user) return null
@@ -30,7 +42,9 @@ const Dashboard = () => {
 			startTime: null,
 			endTime: null,
 			userId: user.uid,
-		}).finally(() => setOpen(false))
+		})
+			.then(() => refetch())
+			.finally(() => setOpen(false))
 	}
 
 	return (
@@ -51,15 +65,26 @@ const Dashboard = () => {
 						</div>
 						<Separator />
 						<div className='w-full p-4 rounded-md flex justify-between bg-gradient-to-b from-background to-secondary relative min-h-60'>
-							<div className='flex flex-col space-y-3 w-full'>
-								{Array.from({ length: 4 }).map((_, idx) => (
-									<TaskItem />
-								))}
-							</div>
+							{isPending && <FillLoading />}
+							{error && (
+								<Alert variant='destructive'>
+									<FiAlertCircle className='h-4 w-4' />
+									<AlertTitle>Error</AlertTitle>
+									<AlertDescription>{error.message}</AlertDescription>
+								</Alert>
+							)}
+							{data && (
+								<div className='flex flex-col space-y-3 w-full'>
+									{data &&
+										data.tasks.map(task => (
+											<TaskItem key={task.id} task={task} />
+										))}
+								</div>
+							)}
 						</div>
 					</div>
 
-					<div className='flex flex-col space-y-3 relative w-full'>
+					<div className='flex flex-col space-y-3 w-full'>
 						<div className='p-4 rounded-md bg-gradient-to-r from-blue-900 to-background relative h-24'>
 							<div className='text-2xl font-bold'>Total week</div>
 							<div className='text-3xl font-bold'>02:08:47</div>
