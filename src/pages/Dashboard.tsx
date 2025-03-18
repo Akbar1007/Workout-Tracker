@@ -1,4 +1,4 @@
-import TaskForm from '@/components/forms/task'
+import TaskForm from '@/components/forms/task-form'
 import FillLoading from '@/components/shared/fill-loading'
 import TaskItem from '@/components/shared/task-item'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -15,15 +15,19 @@ import { db } from '@/firebase'
 import { taskSchema } from '@/lib/validation'
 import { TaskService } from '@/services/task.service'
 import { useUserState } from '@/stores/user.store'
+import { ITask } from '@/types'
 import { useQuery } from '@tanstack/react-query'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
 import { BadgePlus } from 'lucide-react'
 import { useState } from 'react'
 import { FiAlertCircle } from 'react-icons/fi'
 import { z } from 'zod'
 
 const Dashboard = () => {
+	const [isEditing, setIsEditing] = useState(false)
+	const [currentTask, setCurrentTask] = useState<ITask | null>(null)
 	const [open, setOpen] = useState(false)
+
 	const { user } = useUserState()
 
 	const { isPending, error, data, refetch } = useQuery({
@@ -45,6 +49,24 @@ const Dashboard = () => {
 		})
 			.then(() => refetch())
 			.finally(() => setOpen(false))
+	}
+
+	const onUpdate = async ({ title }: z.infer<typeof taskSchema>) => {
+		if (!user) return null
+		if (!currentTask) return null
+
+		const ref = doc(db, 'tasks', currentTask.id)
+		console.log(currentTask.id)
+
+		return updateDoc(ref, { title })
+			.then(() => refetch())
+			.finally(() => setIsEditing(false))
+			.catch(e => console.log(e))
+	}
+
+	const onStartEditing = (task: ITask) => {
+		setIsEditing(true)
+		setCurrentTask(task)
 	}
 
 	return (
@@ -75,10 +97,22 @@ const Dashboard = () => {
 							)}
 							{data && (
 								<div className='flex flex-col space-y-3 w-full'>
-									{data &&
+									{!isEditing &&
 										data.tasks.map(task => (
-											<TaskItem key={task.id} task={task} />
+											<TaskItem
+												key={task.id}
+												task={task}
+												onStartEditing={() => onStartEditing(task)}
+											/>
 										))}
+									{isEditing && (
+										<TaskForm
+											title={currentTask?.title}
+											isEdit
+											onClose={() => setIsEditing(false)}
+											handler={onUpdate}
+										/>
+									)}
 								</div>
 							)}
 						</div>
@@ -108,7 +142,13 @@ const Dashboard = () => {
 						<DialogTitle>Create a new task</DialogTitle>
 					</DialogHeader>
 					<Separator />
-					<TaskForm handler={onAdd} />
+					<TaskForm
+						handler={
+							onAdd as (
+								values: z.infer<typeof taskSchema>
+							) => Promise<void | null>
+						}
+					/>
 				</DialogContent>
 			</Dialog>
 		</>

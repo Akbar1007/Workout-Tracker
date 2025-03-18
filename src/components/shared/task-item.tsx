@@ -8,9 +8,10 @@ import { Card } from '../ui/card'
 
 interface Props {
 	task: ITask
+	onStartEditing: () => void
 }
 
-const TaskItem = ({ task }: Props) => {
+const TaskItem = ({ task, onStartEditing }: Props) => {
 	return (
 		<Card className='w-full p-4 shadow-md grid grid-cols-4 items-center relative'>
 			<div className='flex gap-1 items-center col-span-2'>
@@ -25,7 +26,12 @@ const TaskItem = ({ task }: Props) => {
 				<Button variant={'ghost'} size={'icon'} className='w-8 h-8'>
 					<CiPlay1 className='w-5 h-5 text-indigo-500' />
 				</Button>
-				<Button variant={'secondary'} size={'icon'} className='w-8 h-8'>
+				<Button
+					variant={'secondary'}
+					size={'icon'}
+					className='w-8 h-8'
+					onClick={onStartEditing}
+				>
 					<Edit2 className='w-5 h-5' />
 				</Button>
 				<Button variant={'destructive'} size={'icon'} className='w-8 h-8'>

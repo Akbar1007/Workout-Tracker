@@ -1,7 +1,7 @@
 import { taskSchema } from '@/lib/validation'
 import { useUserState } from '@/stores/user.store'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -13,11 +13,11 @@ import { Input } from '../ui/input'
 interface Props {
 	title?: string
 	isEdit?: boolean
-	onCancel?: () => void
+	onClose?: () => void
 	handler: (values: z.infer<typeof taskSchema>) => Promise<void | null>
 }
 
-const TaskForm = ({ title = '', handler }: Props) => {
+const TaskForm = ({ title = '', handler, isEdit, onClose }: Props) => {
 	const [isLoading, setIsLoading] = useState(false)
 
 	const { user } = useUserState()
@@ -30,8 +30,9 @@ const TaskForm = ({ title = '', handler }: Props) => {
 	const onSubmit = async (values: z.infer<typeof taskSchema>) => {
 		if (!user) return null
 		setIsLoading(true)
+
 		const res = handler(values).finally(() => {
-			setIsLoading(true)
+			setIsLoading(false)
 		})
 
 		toast.promise(res, {
@@ -40,6 +41,10 @@ const TaskForm = ({ title = '', handler }: Props) => {
 			error: 'Something went wrong!',
 		})
 	}
+
+	useEffect(() => {
+		form.reset({ title })
+	}, [title])
 
 	return (
 		<>
@@ -62,7 +67,17 @@ const TaskForm = ({ title = '', handler }: Props) => {
 							</FormItem>
 						)}
 					/>
-					<div className='flex justify-end'>
+					<div className='flex justify-end gap-2'>
+						{isEdit && (
+							<Button
+								type='button'
+								disabled={isLoading}
+								variant={'destructive'}
+								onClick={onClose}
+							>
+								Cancel
+							</Button>
+						)}
 						<Button type='submit' disabled={isLoading}>
 							Submit
 						</Button>
@@ -74,9 +89,3 @@ const TaskForm = ({ title = '', handler }: Props) => {
 }
 
 export default TaskForm
-
-const QUery = () => {
-	const [quaery, setQuaery] = useState('query')
-
-	return <div>query</div>
-}
