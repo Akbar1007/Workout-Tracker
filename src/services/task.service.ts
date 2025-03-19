@@ -14,6 +14,7 @@ export const TaskService = {
 		let taskData: ITaskData
 
 		const tasks = querySnapshot.docs.map(doc => ({
+			id: doc.id,
 			...doc.data(),
 		})) as ITask[]
 

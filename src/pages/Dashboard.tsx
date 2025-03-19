@@ -51,23 +51,44 @@ const Dashboard = () => {
 			.finally(() => setOpen(false))
 	}
 
-	const onUpdate = async ({ title }: z.infer<typeof taskSchema>) => {
-		if (!user) return null
-		if (!currentTask) return null
+	const onUpdate = ({ title }: z.infer<typeof taskSchema>) => {
+		if (!user || !currentTask) return null
 
 		const ref = doc(db, 'tasks', currentTask.id)
-		console.log(currentTask.id)
 
 		return updateDoc(ref, { title })
 			.then(() => refetch())
+			.catch(e => console.log('Error is here:', e))
 			.finally(() => setIsEditing(false))
-			.catch(e => console.log(e))
 	}
+
+	// const onUpdate = async ({ title }: z.infer<typeof taskSchema>) => {
+	// 	if (!user) return null
+	// 	if (!currentTask) return null
+	// 	console.log('Current task:', currentTask)
+	// 	console.log('Current task id:', currentTask.id)
+
+	// 	try {
+	// 		const ref = doc(db, 'tasks', currentTask.id)
+	// 		console.log(currentTask.id)
+
+	// 		await updateDoc(ref, { title })
+	// 		await refetch()
+	// 	} catch (e) {
+	// 		console.log('Error updating doc:', e)
+	// 	} finally {
+	// 		setIsEditing(false)
+	// 	}
+	// }
 
 	const onStartEditing = (task: ITask) => {
 		setIsEditing(true)
 		setCurrentTask(task)
 	}
+
+	// const onDelete = () => {
+
+	// }
 
 	return (
 		<>
