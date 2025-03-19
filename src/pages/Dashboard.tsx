@@ -17,13 +17,21 @@ import { TaskService } from '@/services/task.service'
 import { useUserState } from '@/stores/user.store'
 import { ITask } from '@/types'
 import { useQuery } from '@tanstack/react-query'
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	updateDoc,
+} from 'firebase/firestore'
 import { BadgePlus } from 'lucide-react'
 import { useState } from 'react'
 import { FiAlertCircle } from 'react-icons/fi'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 const Dashboard = () => {
+	const [isDeleting, setIsDeleting] = useState(false)
 	const [isEditing, setIsEditing] = useState(false)
 	const [currentTask, setCurrentTask] = useState<ITask | null>(null)
 	const [open, setOpen] = useState(false)
@@ -58,7 +66,7 @@ const Dashboard = () => {
 
 		return updateDoc(ref, { title })
 			.then(() => refetch())
-			.catch(e => console.log('Error is here:', e))
+			.catch(e => console.log('Error:', e))
 			.finally(() => setIsEditing(false))
 	}
 
@@ -86,9 +94,19 @@ const Dashboard = () => {
 		setCurrentTask(task)
 	}
 
-	// const onDelete = () => {
+	const onDelete = async (id: string) => {
+		setIsDeleting(true)
 
-	// }
+		const promise = deleteDoc(doc(db, 'tasks', id))
+			.then(() => refetch())
+			.finally(() => setIsDeleting(false))
+
+		toast.promise(promise, {
+			loading: 'Deleting...',
+			success: 'Task Deleted.',
+			error: 'Something went wrong!',
+		})
+	}
 
 	return (
 		<>
@@ -108,7 +126,7 @@ const Dashboard = () => {
 						</div>
 						<Separator />
 						<div className='w-full p-4 rounded-md flex justify-between bg-gradient-to-b from-background to-secondary relative min-h-60'>
-							{isPending && <FillLoading />}
+							{(isPending || isDeleting) && <FillLoading />}
 							{error && (
 								<Alert variant='destructive'>
 									<FiAlertCircle className='h-4 w-4' />
@@ -124,6 +142,7 @@ const Dashboard = () => {
 												key={task.id}
 												task={task}
 												onStartEditing={() => onStartEditing(task)}
+												onDelete={() => onDelete(task.id)}
 											/>
 										))}
 									{isEditing && (

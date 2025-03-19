@@ -1,5 +1,4 @@
 import { db } from '@/firebase'
-import { ITask, ITaskData } from '@types'
 import { collection, getDocs, query } from 'firebase/firestore'
 
 export const TaskService = {
@@ -14,8 +13,8 @@ export const TaskService = {
 		let taskData: ITaskData
 
 		const tasks = querySnapshot.docs.map(doc => ({
-			id: doc.id,
 			...doc.data(),
+			id: doc.id,
 		})) as ITask[]
 
 		taskData = {

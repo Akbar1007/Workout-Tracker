@@ -9,9 +9,10 @@ import { Card } from '../ui/card'
 interface Props {
 	task: ITask
 	onStartEditing: () => void
+	onDelete: () => void
 }
 
-const TaskItem = ({ task, onStartEditing }: Props) => {
+const TaskItem = ({ task, onStartEditing, onDelete }: Props) => {
 	return (
 		<Card className='w-full p-4 shadow-md grid grid-cols-4 items-center relative'>
 			<div className='flex gap-1 items-center col-span-2'>
@@ -34,7 +35,12 @@ const TaskItem = ({ task, onStartEditing }: Props) => {
 				>
 					<Edit2 className='w-5 h-5' />
 				</Button>
-				<Button variant={'destructive'} size={'icon'} className='w-8 h-8'>
+				<Button
+					variant={'destructive'}
+					size={'icon'}
+					className='w-8 h-8'
+					onClick={onDelete}
+				>
 					<Trash className='w-5 h-5' />
 				</Button>
 			</div>
