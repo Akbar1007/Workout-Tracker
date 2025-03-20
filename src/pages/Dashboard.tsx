@@ -70,25 +70,6 @@ const Dashboard = () => {
 			.finally(() => setIsEditing(false))
 	}
 
-	// const onUpdate = async ({ title }: z.infer<typeof taskSchema>) => {
-	// 	if (!user) return null
-	// 	if (!currentTask) return null
-	// 	console.log('Current task:', currentTask)
-	// 	console.log('Current task id:', currentTask.id)
-
-	// 	try {
-	// 		const ref = doc(db, 'tasks', currentTask.id)
-	// 		console.log(currentTask.id)
-
-	// 		await updateDoc(ref, { title })
-	// 		await refetch()
-	// 	} catch (e) {
-	// 		console.log('Error updating doc:', e)
-	// 	} finally {
-	// 		setIsEditing(false)
-	// 	}
-	// }
-
 	const onStartEditing = (task: ITask) => {
 		setIsEditing(true)
 		setCurrentTask(task)
@@ -120,6 +101,7 @@ const Dashboard = () => {
 								onClick={() => {
 									setOpen(true)
 								}}
+								aria-label='Add new task'
 							>
 								<BadgePlus />
 							</Button>
@@ -143,6 +125,7 @@ const Dashboard = () => {
 												task={task}
 												onStartEditing={() => onStartEditing(task)}
 												onDelete={() => onDelete(task.id)}
+												refetch={refetch}
 											/>
 										))}
 									{isEditing && (
@@ -150,7 +133,11 @@ const Dashboard = () => {
 											title={currentTask?.title}
 											isEdit
 											onClose={() => setIsEditing(false)}
-											handler={onUpdate}
+											handler={
+												onUpdate as (
+													values: z.infer<typeof taskSchema>
+												) => Promise<void | null>
+											}
 										/>
 									)}
 								</div>
@@ -176,6 +163,7 @@ const Dashboard = () => {
 			</div>
 
 			<Dialog open={open} onOpenChange={setOpen}>
+				{/* empty */}
 				<DialogTrigger></DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
