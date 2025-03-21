@@ -35,6 +35,7 @@ const TaskItem = ({ task, onStartEditing, onDelete, refetch }: Props) => {
 			refetch()
 		} catch (error) {
 			toast.error('An error occured.')
+			console.log(error)
 		} finally {
 			setIsLoading(false)
 		}
@@ -54,6 +55,7 @@ const TaskItem = ({ task, onStartEditing, onDelete, refetch }: Props) => {
 			refetch()
 		} catch (error) {
 			toast.error('An error occured.')
+			console.log(error)
 		} finally {
 			setIsLoading(false)
 		}

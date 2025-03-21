@@ -8,7 +8,6 @@ import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { db } from '@/firebase'
@@ -17,6 +16,7 @@ import { TaskService } from '@/services/task.service'
 import { useUserState } from '@/stores/user.store'
 import { ITask } from '@/types'
 import { useQuery } from '@tanstack/react-query'
+import { addMilliseconds, addMinutes, format } from 'date-fns'
 import {
 	addDoc,
 	collection,
@@ -89,6 +89,16 @@ const Dashboard = () => {
 		})
 	}
 
+	const formatTime = (time: number) => {
+		const date = addMilliseconds(new Date(0), time)
+		const formatedDate = format(
+			addMinutes(date, date.getTimezoneOffset()),
+			'HH:mm:ss'
+		)
+
+		return formatedDate
+	}
+
 	return (
 		<>
 			<div className='h-screen max-w-6xl mx-auto flex items-center'>
@@ -147,24 +157,46 @@ const Dashboard = () => {
 
 					<div className='flex flex-col space-y-3 w-full'>
 						<div className='p-4 rounded-md bg-gradient-to-r from-blue-900 to-background relative h-24'>
-							<div className='text-2xl font-bold'>Total week</div>
-							<div className='text-3xl font-bold'>02:08:47</div>
+							<div className='text-2xl font-bold'>Total Week</div>
+							{isPending ? (
+								<FillLoading />
+							) : (
+								data && (
+									<div className='text-3xl font-bold'>
+										{formatTime(data.weekTotal)}
+									</div>
+								)
+							)}
 						</div>
 						<div className='p-4 rounded-md bg-gradient-to-r from-secondary to-background relative h-24'>
-							<div className='text-2xl font-bold'>Total week</div>
-							<div className='text-3xl font-bold'>02:08:47</div>
+							<div className='text-2xl font-bold'>Total Month</div>
+							{isPending ? (
+								<FillLoading />
+							) : (
+								data && (
+									<div className='text-3xl font-bold'>
+										{formatTime(data.monthTotal)}
+									</div>
+								)
+							)}
 						</div>
 						<div className='p-4 rounded-md bg-gradient-to-r from-destructive to-background relative h-24'>
-							<div className='text-2xl font-bold'>Total week</div>
-							<div className='text-3xl font-bold'>02:08:47</div>
+							<div className='text-2xl font-bold'>Total Time</div>
+							{isPending ? (
+								<FillLoading />
+							) : (
+								data && (
+									<div className='text-3xl font-bold'>
+										{formatTime(data.total)}
+									</div>
+								)
+							)}
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<Dialog open={open} onOpenChange={setOpen}>
-				{/* empty */}
-				<DialogTrigger></DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>Create a new task</DialogTitle>
