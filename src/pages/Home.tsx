@@ -1,13 +1,12 @@
 import men from '@/assets/images/men.png'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { featuredItems, programs } from '@/constants'
+import { featuredItems } from '@/constants'
 import { auth } from '@/firebase'
 import { useUserState } from '@/stores/user.store'
 import { LogOut } from 'lucide-react'
 import { CgGym } from 'react-icons/cg'
-import { FaArrowRight } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
+import ProgramsPage from './Programs'
 
 const HomePage = () => {
 	const { user, setUser } = useUserState()
@@ -67,37 +66,11 @@ const HomePage = () => {
 						</div>
 					</div>
 				</div>
-				{/* style small change */}
+
 				<img src={men} className='w-1/5 ml-12' />
 			</div>
 
-			<div className='container max-w-5xl mx-auto'>
-				<h1 className='text-4xl'>Not sure where to start?</h1>
-				<p className='mt-2 text-muted-foreground'>
-					Programs offer day-to-day guidance on an interactive calendar to keep
-					you on track.
-				</p>
-				<div className='grid grid-cols-3 gap-4 my-8'>
-					{programs.map(item => (
-						<Card
-							key={item.title}
-							className='relative p-8 cursor-pointer group'
-						>
-							<h3>{item.title}</h3>
-							<p className='text-sm text-muted-foreground mt-2 ml-2'>
-								{item.description}
-							</p>
-							<Button
-								size={'icon'}
-								variant={'ghost'}
-								className='absolute right-2 top-1/2 group-hover:translate-x-1 transition-transform'
-							>
-								<FaArrowRight />
-							</Button>
-						</Card>
-					))}
-				</div>
-			</div>
+			<ProgramsPage />
 		</>
 	)
 }

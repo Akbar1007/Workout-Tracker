@@ -7,8 +7,6 @@ import UserBox from './user-box'
 
 const Navbar = () => {
 	const { user } = useUserState()
-	// do not forget to remove:
-	console.log(user)
 
 	return (
 		<div className='w-full h-[10vh] border-b fixed inset-0 z-50 bg-background'>
