@@ -1,10 +1,12 @@
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Navbar from './components/shared/navbar'
 import { Toaster } from './components/ui/sonner'
 import AuthPage from './pages/Auth'
-import Dashboard from './pages/Dashboard'
 import HomePage from './pages/Home'
 import ProgramsPage from './pages/Programs'
+
+const Dashboard = lazy(() => import('./pages/Dashboard'))
 
 function App() {
 	return (

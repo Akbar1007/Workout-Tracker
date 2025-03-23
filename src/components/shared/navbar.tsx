@@ -16,13 +16,13 @@ const Navbar = () => {
 				</Link>
 				<div className='flex items-center gap-3'>
 					{navLinks.map(link => (
-						<a
-							href={link.path}
+						<Link
+							to={link.path}
 							key={link.path}
 							className='font-medium hover:underline'
 						>
 							{link.label}
-						</a>
+						</Link>
 					))}
 					<ModeToggle />
 
