@@ -74,11 +74,12 @@ const TaskForm = ({ title = '', handler, isEdit, onClose }: Props) => {
 								disabled={isLoading}
 								variant={'destructive'}
 								onClick={onClose}
+								aria-label='cancel'
 							>
 								Cancel
 							</Button>
 						)}
-						<Button type='submit' disabled={isLoading}>
+						<Button type='submit' disabled={isLoading} aria-label='submit'>
 							Submit
 						</Button>
 					</div>

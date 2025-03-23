@@ -14,7 +14,7 @@ const ProgramsPage = () => {
 			<div className='grid grid-cols-3 gap-4 my-8'>
 				{programs.map(item => (
 					<Card key={item.title} className='relative p-8 cursor-pointer group'>
-						<h3>{item.title}</h3>
+						<p className='text-2xl'>{item.title}</p>
 						<p className='text-sm text-muted-foreground mt-2 ml-2'>
 							{item.description}
 						</p>
@@ -22,6 +22,7 @@ const ProgramsPage = () => {
 							size={'icon'}
 							variant={'ghost'}
 							className='absolute right-2 top-1/2 group-hover:translate-x-1 transition-transform'
+							aria-label='Go to details'
 						>
 							<FaArrowRight />
 						</Button>

@@ -33,7 +33,11 @@ const HomePage = () => {
 					{user ? (
 						<div className='flex gap-4'>
 							<Link to={'/dashboard'}>
-								<Button className='w-fit mt-6 font-bold h-12' size={'lg'}>
+								<Button
+									className='w-fit mt-6 font-bold h-12'
+									size={'lg'}
+									aria-label='workouts'
+								>
 									<span>Go to Workouts</span>
 									<CgGym />
 								</Button>
@@ -44,6 +48,7 @@ const HomePage = () => {
 								size={'lg'}
 								variant={'destructive'}
 								onClick={onLogout}
+								aria-label='logout'
 							>
 								<span>Logout</span>
 								<LogOut className='h-5 w-5 ml-2' />
@@ -51,7 +56,11 @@ const HomePage = () => {
 						</div>
 					) : (
 						<Link to={'auth'}>
-							<Button className='w-fit mt-6 font-bold h-12' size={'lg'}>
+							<Button
+								className='w-fit mt-6 font-bold h-12'
+								size={'lg'}
+								aria-label='start now'
+							>
 								Start now.
 							</Button>
 						</Link>
@@ -67,7 +76,7 @@ const HomePage = () => {
 					</div>
 				</div>
 
-				<img src={men} className='w-1/5 ml-12' />
+				<img src={men} className='w-1/5 ml-12' alt='men' />
 			</div>
 
 			<ProgramsPage />

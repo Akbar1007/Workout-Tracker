@@ -32,13 +32,15 @@ const UserBox = () => {
 	}
 
 	return (
-		// TODO: add error boundary to img
-
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Avatar className='cursor-pointer'>
-					<AvatarImage src={user.photoURL!} />
-					<AvatarFallback className='uppercase'>
+					<AvatarImage src={user.photoURL!} alt='avatar-image' />
+					<AvatarFallback
+						role='img'
+						aria-label='picture-fallback'
+						className='uppercase'
+					>
 						{user.email![0]}
 					</AvatarFallback>
 				</Avatar>

@@ -12,7 +12,7 @@ const Navbar = () => {
 		<div className='w-full h-[10vh] border-b fixed inset-0 z-50 bg-background'>
 			<div className='container max-w-6xl mx-auto h-full flex justify-between items-center'>
 				<Link to={'/'}>
-					<h1 className='text-2xl font-bold'>WORKOUT TRACKER</h1>
+					<h1 className='text-2xl font-bold pl-2'>WORKOUT TRACKER</h1>
 				</Link>
 				<div className='flex items-center gap-3'>
 					{navLinks.map(link => (
@@ -30,7 +30,11 @@ const Navbar = () => {
 						<UserBox />
 					) : (
 						<Link to={'auth'}>
-							<Button variant={'secondary'} className='cursor-pointer'>
+							<Button
+								variant={'secondary'}
+								className='cursor-pointer'
+								aria-label='join'
+							>
 								Join for Free
 							</Button>
 						</Link>

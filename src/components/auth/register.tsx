@@ -141,6 +141,7 @@ const Register = () => {
 							type='submit'
 							className='h-12 w-full mt-2'
 							disabled={isLoading}
+							aria-label='submit'
 						>
 							Submit
 						</Button>

@@ -1,4 +1,4 @@
-import { db } from '@/firebase'
+import { auth, db } from '@/firebase'
 import { ITask, ITaskData } from '@/types'
 import {
 	endOfMonth,
@@ -7,7 +7,7 @@ import {
 	startOfMonth,
 	startOfWeek,
 } from 'date-fns'
-import { collection, getDocs, query } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 export const TaskService = {
 	getTasks: async () => {
@@ -21,7 +21,10 @@ export const TaskService = {
 		const monthStart = startOfMonth(now)
 		const monthEnd = endOfMonth(now)
 
-		const q = query(collection(db, 'tasks'))
+		const q = query(
+			collection(db, 'tasks'),
+			where('userId', '==', auth.currentUser?.uid)
+		)
 		const querySnapshot = await getDocs(q)
 
 		querySnapshot.docs.forEach(doc => {

@@ -46,6 +46,7 @@ const Social = () => {
 					variant={'secondary'}
 					disabled={isLoading}
 					onClick={onGithub}
+					aria-label='github'
 				>
 					<FaGithub className='mr-2' />
 					<span>Continue with GitHub</span>
@@ -56,6 +57,7 @@ const Social = () => {
 					variant={'destructive'}
 					disabled={isLoading}
 					onClick={onGoogle}
+					aria-label='google'
 				>
 					<FaGoogle className='mr-2' />
 					<span>Continue with Google</span>

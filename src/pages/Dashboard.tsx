@@ -42,8 +42,6 @@ const Dashboard = () => {
 		queryKey: ['tasks-data'],
 		queryFn: TaskService.getTasks,
 	})
-	// do not forget to remove
-	console.log(data)
 
 	const onAdd = async ({ title }: z.infer<typeof taskSchema>) => {
 		if (!user) return null

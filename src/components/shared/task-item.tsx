@@ -70,6 +70,7 @@ const TaskItem = ({ task, onStartEditing, onDelete, refetch }: Props) => {
 						size={'icon'}
 						className='w-8 h-8'
 						onClick={onStart}
+						aria-label='start'
 					>
 						<CiPlay1 className='w-5 h-5 text-indigo-500' />
 					</Button>
@@ -82,6 +83,7 @@ const TaskItem = ({ task, onStartEditing, onDelete, refetch }: Props) => {
 						size={'icon'}
 						className='w-8 h-8'
 						onClick={onPause}
+						aria-label='pause'
 					>
 						<CiPause1 className='w-5 h-5 text-indigo-500' />
 					</Button>
@@ -94,6 +96,7 @@ const TaskItem = ({ task, onStartEditing, onDelete, refetch }: Props) => {
 						size={'icon'}
 						className='w-8 h-8'
 						onClick={onStart}
+						aria-label='restart'
 					>
 						<RxReload className='w-5 h-5 text-indigo-500' />
 					</Button>
@@ -125,6 +128,7 @@ const TaskItem = ({ task, onStartEditing, onDelete, refetch }: Props) => {
 					size={'icon'}
 					className='w-8 h-8'
 					onClick={onStartEditing}
+					aria-label='edit'
 				>
 					<Edit2 className='w-5 h-5' />
 				</Button>
@@ -133,6 +137,7 @@ const TaskItem = ({ task, onStartEditing, onDelete, refetch }: Props) => {
 					size={'icon'}
 					className='w-8 h-8'
 					onClick={onDelete}
+					aria-label='delete'
 				>
 					<Trash className='w-5 h-5' />
 				</Button>

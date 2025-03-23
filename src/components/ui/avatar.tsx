@@ -20,13 +20,15 @@ function Avatar({
 
 function AvatarImage({
 	className,
+	alt,
 	...props
-}: React.ComponentProps<typeof AvatarPrimitive.Image>) {
+}: React.ComponentProps<typeof AvatarPrimitive.Image> & { alt?: string }) {
 	return (
 		<AvatarPrimitive.Image
 			data-slot='avatar-image'
 			className={cn('aspect-square size-full', className)}
 			{...props}
+			alt={alt}
 		/>
 	)
 }
@@ -38,6 +40,8 @@ function AvatarFallback({
 	return (
 		<AvatarPrimitive.Fallback
 			data-slot='avatar-fallback'
+			role='img'
+			aria-label='avatar-fallback'
 			className={cn(
 				'bg-muted flex size-full items-center justify-center rounded-full',
 				className
