@@ -35,6 +35,6 @@ export const programs = [
 
 export const navLinks = [
 	{ label: 'Home', path: '/' },
-	{ label: 'Programs', path: '/programs' },
-	{ label: 'Trainings', path: '/dashboard' },
+	{ label: 'Programs', path: 'programs' },
+	{ label: 'Trainings', path: 'dashboard' },
 ]
