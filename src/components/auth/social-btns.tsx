@@ -1,4 +1,3 @@
-import { auth } from '@/firebase'
 import {
 	GithubAuthProvider,
 	GoogleAuthProvider,
@@ -7,6 +6,8 @@ import {
 import { useState } from 'react'
 import { FaGithub, FaGoogle } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+
+import { auth } from '@/firebase'
 import FillLoading from '../shared/fill-loading'
 import { Button } from '../ui/button'
 import { Separator } from '../ui/separator'

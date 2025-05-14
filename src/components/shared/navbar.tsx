@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom'
+
 import { navLinks } from '@/constants'
 import { useUserState } from '@/stores/user.store'
-import { Link } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { ModeToggle } from './mode-toggle'
 import UserBox from './user-box'

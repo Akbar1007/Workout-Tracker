@@ -1,8 +1,9 @@
-import { auth } from '@/firebase'
-import { useUserState } from '@/stores/user.store'
 import { LogOut, LucideLoader2 } from 'lucide-react'
 import { CgGym } from 'react-icons/cg'
 import { useNavigate } from 'react-router-dom'
+
+import { auth } from '@/firebase'
+import { useUserState } from '@/stores/user.store'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import {
 	DropdownMenu,

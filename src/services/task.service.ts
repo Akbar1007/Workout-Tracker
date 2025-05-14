@@ -1,5 +1,3 @@
-import { auth, db } from '@/firebase'
-import { ITask, ITaskData } from '@/types'
 import {
 	endOfMonth,
 	endOfWeek,
@@ -8,6 +6,9 @@ import {
 	startOfWeek,
 } from 'date-fns'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+
+import { auth, db } from '@/firebase'
+import { ITask, ITaskData } from '@/types'
 
 export const TaskService = {
 	getTasks: async () => {

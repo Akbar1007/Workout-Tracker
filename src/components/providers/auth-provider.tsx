@@ -1,6 +1,7 @@
+import { ReactNode, useEffect, useState } from 'react'
+
 import { auth } from '@/firebase'
 import { useUserState } from '@/stores/user.store'
-import { ReactNode, useEffect, useState } from 'react'
 import FillLoading from '../shared/fill-loading'
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {

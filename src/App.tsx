@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
+
 import Navbar from './components/shared/navbar'
 import { Toaster } from './components/ui/sonner'
 import AuthPage from './pages/Auth'
