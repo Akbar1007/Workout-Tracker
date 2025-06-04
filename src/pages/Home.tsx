@@ -1,11 +1,12 @@
+import { LogOut } from 'lucide-react'
+import { CgGym } from 'react-icons/cg'
+import { Link, useNavigate } from 'react-router-dom'
+
 import men from '@/assets/images/men.png'
 import { Button } from '@/components/ui/button'
 import { featuredItems } from '@/constants'
 import { auth } from '@/firebase'
 import { useUserState } from '@/stores/user.store'
-import { LogOut } from 'lucide-react'
-import { CgGym } from 'react-icons/cg'
-import { Link, useNavigate } from 'react-router-dom'
 import ProgramsPage from './Programs'
 
 const HomePage = () => {

@@ -1,7 +1,8 @@
+import { FaArrowRight } from 'react-icons/fa'
+
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { programs } from '@/constants'
-import { FaArrowRight } from 'react-icons/fa'
 
 const ProgramsPage = () => {
 	return (

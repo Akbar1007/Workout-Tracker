@@ -1,3 +1,18 @@
+import { useQuery } from '@tanstack/react-query'
+import { addMilliseconds, addMinutes, format } from 'date-fns'
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	updateDoc,
+} from 'firebase/firestore'
+import { BadgePlus } from 'lucide-react'
+import { useState } from 'react'
+import { FiAlertCircle } from 'react-icons/fi'
+import { toast } from 'sonner'
+import { z } from 'zod'
+
 import TaskForm from '@/components/forms/task-form'
 import FillLoading from '@/components/shared/fill-loading'
 import TaskItem from '@/components/shared/task-item'
@@ -15,20 +30,6 @@ import { taskSchema } from '@/lib/validation'
 import { TaskService } from '@/services/task.service'
 import { useUserState } from '@/stores/user.store'
 import { ITask } from '@/types'
-import { useQuery } from '@tanstack/react-query'
-import { addMilliseconds, addMinutes, format } from 'date-fns'
-import {
-	addDoc,
-	collection,
-	deleteDoc,
-	doc,
-	updateDoc,
-} from 'firebase/firestore'
-import { BadgePlus } from 'lucide-react'
-import { useState } from 'react'
-import { FiAlertCircle } from 'react-icons/fi'
-import { toast } from 'sonner'
-import { z } from 'zod'
 
 const Dashboard = () => {
 	const [isDeleting, setIsDeleting] = useState(false)
